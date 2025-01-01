@@ -1,12 +1,14 @@
 package com.shopiduke.auth.servlet;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public class HmacValidator {
+public class HmacValidator implements Serializable {
 
   private final String apiSecret;
 
@@ -34,9 +36,10 @@ public class HmacValidator {
       }
 
       Mac mac = Mac.getInstance("HmacSHA256");
-      SecretKeySpec secretKeySpec = new SecretKeySpec(apiSecret.getBytes(), "HmacSHA256");
+      SecretKeySpec secretKeySpec =
+          new SecretKeySpec(apiSecret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
       mac.init(secretKeySpec);
-      byte[] hash = mac.doFinal(data.toString().getBytes());
+      byte[] hash = mac.doFinal(data.toString().getBytes(StandardCharsets.UTF_8));
 
       String expectedHmac = bytesToHex(hash);
       String providedHmac = req.getParameter("hmac");

@@ -1,6 +1,8 @@
 package com.shopiduke.auth.store;
 
-public interface AccessTokenStore {
+import java.io.Serializable;
+
+public interface AccessTokenStore extends Serializable {
   String get(String shop);
 
   void save(String shop, String accessToken);
