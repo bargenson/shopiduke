@@ -1,8 +1,8 @@
-package com.shopiduke.auth.servlet;
+package io.github.bargenson.shopiduke.auth.servlet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shopiduke.auth.store.AccessTokenStore;
+import io.github.bargenson.shopiduke.auth.store.AccessTokenStore;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

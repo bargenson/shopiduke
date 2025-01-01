@@ -1,4 +1,4 @@
-package com.shopiduke.auth.servlet;
+package io.github.bargenson.shopiduke.auth.servlet;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.Serializable;

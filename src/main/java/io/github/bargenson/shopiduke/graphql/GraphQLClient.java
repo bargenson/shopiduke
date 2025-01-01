@@ -1,4 +1,4 @@
-package com.shopiduke.graphql;
+package io.github.bargenson.shopiduke.graphql;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

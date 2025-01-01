@@ -1,4 +1,4 @@
-package com.shopiduke;
+package io.github.bargenson.shopiduke;
 
 import java.io.BufferedReader;
 import java.io.IOException;

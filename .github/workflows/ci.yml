@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
 
       - name: Cache Maven packages
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -53,13 +53,6 @@ jobs:
           files: target/shopiduke-*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Deploy Snapshots to Maven Central
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: mvn deploy -DskipTests --settings .github/settings.xml
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
 
       - name: Deploy Releases to Maven Central
         if: startsWith(github.ref, 'refs/tags/')

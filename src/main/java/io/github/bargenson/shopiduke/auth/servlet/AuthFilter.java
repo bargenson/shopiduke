@@ -1,6 +1,6 @@
-package com.shopiduke.auth.servlet;
+package io.github.bargenson.shopiduke.auth.servlet;
 
-import com.shopiduke.auth.store.AccessTokenStore;
+import io.github.bargenson.shopiduke.auth.store.AccessTokenStore;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;

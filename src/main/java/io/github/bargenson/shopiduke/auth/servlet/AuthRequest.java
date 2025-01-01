@@ -1,4 +1,4 @@
-package com.shopiduke.auth.servlet;
+package io.github.bargenson.shopiduke.auth.servlet;
 
 public class AuthRequest {
   private final String shop;

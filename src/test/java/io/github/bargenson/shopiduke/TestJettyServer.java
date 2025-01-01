@@ -1,11 +1,11 @@
-package com.shopiduke;
+package io.github.bargenson.shopiduke;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.shopiduke.auth.servlet.AuthFilter;
-import com.shopiduke.auth.servlet.AuthServlet;
-import com.shopiduke.auth.store.AccessTokenStore;
-import com.shopiduke.auth.store.InMemoryAccessTokenStore;
-import com.shopiduke.graphql.GraphQLClient;
+import io.github.bargenson.shopiduke.auth.servlet.AuthFilter;
+import io.github.bargenson.shopiduke.auth.servlet.AuthServlet;
+import io.github.bargenson.shopiduke.auth.store.AccessTokenStore;
+import io.github.bargenson.shopiduke.auth.store.InMemoryAccessTokenStore;
+import io.github.bargenson.shopiduke.graphql.GraphQLClient;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

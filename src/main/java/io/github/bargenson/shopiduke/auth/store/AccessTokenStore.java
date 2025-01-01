@@ -1,4 +1,4 @@
-package com.shopiduke.auth.store;
+package io.github.bargenson.shopiduke.auth.store;
 
 import java.io.Serializable;
 
