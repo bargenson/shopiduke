@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/bargenson/shopiduke.svg?branch=main)](https://travis-ci.com/bargenson/shopiduke)
-
 # Shopiduke
 
 This project is a Java library designed to facilitate the creation of Shopify apps in Java. It provides a servlet-based implementation of the OAuth flow of a Shopify app, a filter to limit resources to shops with known access tokens, and a basic GraphQL client to consume the Shopify Admin API.
