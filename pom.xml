@@ -228,7 +228,7 @@
               <goal>java</goal>
             </goals>
             <configuration>
-              <mainClass>com.shopiduke.TestJettyServer</mainClass>
+              <mainClass>io.github.bargenson.shopiduke.TestJettyServer</mainClass>
               <classpathScope>test</classpathScope>
             </configuration>
           </execution>
@@ -238,7 +238,7 @@
               <goal>java</goal>
             </goals>
             <configuration>
-              <mainClass>com.shopiduke.TestSpringBoot</mainClass>
+              <mainClass>io.github.bargenson.shopiduke.TestSpringBoot</mainClass>
               <classpathScope>test</classpathScope>
             </configuration>
           </execution>
