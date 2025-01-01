@@ -60,14 +60,6 @@ jobs:
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
 
-      - name: Deploy to GitHub Releases
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: target/shopiduke-*.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Deploy Releases to Maven Central
         if: startsWith(github.ref, 'refs/tags/')
         run: mvn deploy -DskipTests --settings .github/settings.xml
