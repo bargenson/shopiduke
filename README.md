@@ -1,4 +1,6 @@
-# Shopify Java Library
+[![Build Status](https://travis-ci.com/bargenson/shopiduke.svg?branch=main)](https://travis-ci.com/bargenson/shopiduke)
+
+# Shopiduke
 
 This project is a Java library designed to facilitate the creation of Shopify apps in Java. It provides a servlet-based implementation of the OAuth flow of a Shopify app, a filter to limit resources to shops with known access tokens, and a basic GraphQL client to consume the Shopify Admin API.
 
@@ -24,7 +26,7 @@ The project includes an example using Spring Boot and Jetty showing how it can b
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/shopify-java-library.git
+   git clone https://github.com/bargenson/shopiduke.git
    cd shopify-java-library
    ```
 
