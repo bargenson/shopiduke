@@ -10,17 +10,15 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class AuthFilter implements Filter {
 
   private final AccessTokenStore store;
-  private final URI authUri;
+  private final String authServletPath;
 
-  public AuthFilter(AccessTokenStore store, String authUri) throws URISyntaxException {
+  public AuthFilter(AccessTokenStore store, String authServletPath) {
     this.store = store;
-    this.authUri = new URI(authUri);
+    this.authServletPath = authServletPath;
   }
 
   @Override
@@ -39,12 +37,18 @@ public class AuthFilter implements Filter {
       return;
     }
 
-    if (store.get(shop) == null && !httpRequest.getRequestURI().equals(authUri.getPath())) {
-      httpResponse.sendRedirect(authUri + "?shop=" + shop);
+    if (store.get(shop) == null && !isAuthServletRequested(httpRequest)) {
+      String authServletPathWithContext = httpRequest.getContextPath() + authServletPath;
+      String redirectUrl = String.format("%s?shop=%s", authServletPathWithContext, shop);
+      httpResponse.sendRedirect(redirectUrl);
       return;
     }
 
     chain.doFilter(request, response);
+  }
+
+  private boolean isAuthServletRequested(HttpServletRequest httpRequest) {
+    return httpRequest.getServletPath().replace("?", "").equals(authServletPath);
   }
 
   @Override

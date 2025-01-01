@@ -2,7 +2,7 @@ package io.github.bargenson.shopiduke.auth.servlet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.bargenson.shopiduke.auth.store.AccessTokenStore;
+import io.github.bargenson.shopiduke.auth.servlet.AuthFailureHandler.FailureReason;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,18 +16,22 @@ public class AuthServlet extends HttpServlet {
   private final String apiKey;
   private final String apiSecret;
   private final String scopes;
-  private final String redirectUri;
   private final HmacValidator hmacValidator;
-  private final AccessTokenStore store;
+  private AuthSuccessHandler successHandler;
+  private AuthFailureHandler failureHandler;
 
   public AuthServlet(
-      String apiKey, String apiSecret, String scopes, String redirectUri, AccessTokenStore store) {
+      String apiKey,
+      String apiSecret,
+      String scopes,
+      AuthSuccessHandler successHandler,
+      AuthFailureHandler failureHandler) {
     this.apiKey = apiKey;
     this.apiSecret = apiSecret;
     this.scopes = scopes;
-    this.redirectUri = redirectUri;
     this.hmacValidator = new HmacValidator(apiSecret);
-    this.store = store;
+    this.successHandler = successHandler;
+    this.failureHandler = failureHandler;
   }
 
   @Override
@@ -37,29 +41,27 @@ public class AuthServlet extends HttpServlet {
     AuthRequest authRequest = new AuthRequest(shop, code, scopes);
 
     if (!authRequest.isValid()) {
-      resp.setStatus(400);
-      resp.getWriter().write("Invalid request");
+      failureHandler.handle(req, resp, FailureReason.INVALID_REQUEST);
       return;
     }
 
     if (!authRequest.isAuthorizationGranted()) {
-      String oauthUrl = authRequest.buildAuthorizationUrl(apiKey, redirectUri);
-      resp.sendRedirect(oauthUrl);
+      String authorizationUrl =
+          authRequest.buildAuthorizationUrl(apiKey, req.getRequestURL().toString());
+      resp.sendRedirect(authorizationUrl);
       return;
     }
 
     if (!hmacValidator.validateHmac(req)) {
-      resp.setStatus(400);
-      resp.getWriter().write("Invalid HMAC");
+      failureHandler.handle(req, resp, FailureReason.INVALID_HMAC);
       return;
     }
 
     try {
       String accessToken = exchangeCodeForAccessToken(authRequest);
-      resp.getWriter().write("Access Token: " + accessToken);
+      successHandler.handle(req, resp, shop, accessToken);
     } catch (IOException | InterruptedException e) {
-      resp.setStatus(500);
-      resp.getWriter().write("Error exchanging code for access token");
+      failureHandler.handle(req, resp, FailureReason.CODE_EXCHANGE_FAILED);
     }
   }
 
@@ -80,9 +82,7 @@ public class AuthServlet extends HttpServlet {
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    String accessToken = parseAccessToken(response.body());
-    store.save(authRequest.getShop(), accessToken);
-    return accessToken;
+    return parseAccessToken(response.body());
   }
 
   private String parseAccessToken(String jsonResponse) throws IOException {
