@@ -2,6 +2,7 @@ package io.github.bargenson.shopiduke.auth.servlet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.bargenson.shopiduke.auth.HmacValidator;
 import io.github.bargenson.shopiduke.auth.servlet.AuthFailureHandler.FailureReason;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
