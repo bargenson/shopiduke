@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.github.bargenson.shopiduke.auth.servlet.AuthFilter;
 import io.github.bargenson.shopiduke.auth.servlet.AuthServlet;
 import io.github.bargenson.shopiduke.graphql.GraphQLClient;
+import io.github.bargenson.shopiduke.utils.LocalTunnel;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URISyntaxException;
