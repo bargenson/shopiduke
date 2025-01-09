@@ -8,7 +8,7 @@ import java.io.Serializable;
 @FunctionalInterface
 public interface AuthFailureHandler extends Serializable {
 
-  public enum FailureReason {
+  enum FailureReason {
     INVALID_REQUEST,
     INVALID_HMAC,
     CODE_EXCHANGE_FAILED
